@@ -1,0 +1,18 @@
+{
+  "expenses": [
+    {
+      "id": "895d75a2",
+      "description": "Salary",
+      "amount": 2000,
+      "category": "Income",
+      "date": "2025-06-21T00:00:00.000Z"
+    },
+    {
+      "id": "tt9d61ef",
+      "description": "Winter jacket",
+      "amount": 13,
+      "category": "Shopping",
+      "date": "2025-06-22T00:00:00.000Z"
+    }
+  ]
+}
