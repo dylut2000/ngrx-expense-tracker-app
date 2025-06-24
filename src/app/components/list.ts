@@ -17,10 +17,6 @@ import { Transaction } from './transaction';
       <Transaction />
       <Transaction />
       <Transaction />
-      <Transaction />
-      <Transaction />
-      <Transaction />
-      <Transaction />
     </div>
   `,
 })
