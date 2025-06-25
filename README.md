@@ -31,3 +31,7 @@ ng serve -o
 <hr />
 
 ### [Hardy Lutula Dylut2000](https://github.com/dylut2000)
+
+
+
+### [Check this NGRX video on YOUTUBE](https://www.youtube.com/watch?v=hoPZCrXkIM4&t=2409s)
