@@ -1,6 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, effect } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ExpenseCategory, ExpenseData } from '../models/expense.model';
+import { ExpenseCategory } from '../models/expense.model';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import * as expenseActions from '../store/actions';
 
@@ -55,19 +55,19 @@ import * as expenseActions from '../store/actions';
         </div>
       </div>
       <div class="text-right mt-4">
-        @if(isEditing) {
+        @if(false) {
         <button
           type="button"
           (click)="onReset()"
           class="px-6 py-1 bg-slate-700 hover:opacity-90 text-slate-50 cursor-pointer mb-1"
         >
-          CLEAR
+          CLOSE
         </button>
         <button
           (click)="onEdit()"
           class="px-6 py-1 bg-slate-900 hover:opacity-90 text-slate-50 cursor-pointer mb-1"
         >
-          EDIT
+          SAVE
         </button>
         }@else {
         <button
@@ -86,7 +86,6 @@ export class FormSection {
   private store = inject(Store);
   fb: FormBuilder = inject(FormBuilder);
 
-  isEditing: boolean = false;
   expenseCategory: ExpenseCategory[] = ['Expense', 'Income'];
 
   form = this.fb.nonNullable.group({

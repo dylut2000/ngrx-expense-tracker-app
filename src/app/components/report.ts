@@ -26,7 +26,7 @@ import { AsyncPipe, CurrencyPipe } from '@angular/common';
         </div>
       </div>
       <div
-        class="h-20 bg-teal-500 text-white flex flex-col justify-center items-center gap-1 overflow-hidden"
+        class="h-20 bg-teal-600 text-white flex flex-col justify-center items-center gap-1 overflow-hidden"
       >
         <div class="font-thin">Balance</div>
         <div class="font-bold text-lg">

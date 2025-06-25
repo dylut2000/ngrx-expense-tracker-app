@@ -5,7 +5,6 @@ import { List } from './components/list';
 import { Store } from '@ngrx/store';
 import * as expenseActions from './store/actions';
 import { Loading } from './components/loading';
-import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-root',
@@ -33,6 +32,5 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(expenseActions.LOAD_EXPENSE());
-    console.log(uuidv4());
   }
 }

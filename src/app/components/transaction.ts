@@ -1,6 +1,8 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { Expense } from '../models/expense.model';
 import { CurrencyPipe, DatePipe } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { DELETE_EXPENSE } from '../store/actions';
 
 @Component({
   selector: 'Transaction',
@@ -13,27 +15,27 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
       <div
         class="absolute top-0 left-0 text-[8px] font-thin w-12 text-center text-white"
         [class]="
-          transaction()?.category == 'Expense'
+          transaction().category == 'Expense'
             ? 'bg-red-500/70'
             : 'bg-teal-500/70'
         "
       >
-        {{ transaction()?.category }}
+        {{ transaction().category }}
       </div>
       <div class="absolute bottom-0 left-1 text-[8px] font-thin px-1">
-        {{ transaction()?.date | date }}
+        {{ transaction().date | date }}
       </div>
 
       <div class="flex-1 overflow-hidden">
         <p class="w-full truncate text-slate-500">
-          {{ transaction()?.description }}
+          {{ transaction().description }}
         </p>
       </div>
       <div class="md:font-bold text-slate-500">
-        {{ transaction()?.amount | currency : 'R' }}
+        {{ transaction().amount | currency : 'R' }}
       </div>
       <div class="text-slate-700">
-        <button class="p-2 shadow cursor-pointer">
+        <button class="p-2 shadow cursor-pointer" (click)="onHandleEdit()">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -47,7 +49,7 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
             />
           </svg>
         </button>
-        <button class="p-2 shadow cursor-pointer">
+        <button class="p-2 shadow cursor-pointer" (click)="onHandleDelete()">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -67,5 +69,15 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
   `,
 })
 export class Transaction {
-  transaction = input<Expense>();
+  private store = inject(Store);
+
+  transaction = input.required<Expense>();
+
+  onHandleEdit(): void {
+    console.log('handle edit');
+  }
+
+  onHandleDelete(): void {
+    this.store.dispatch(DELETE_EXPENSE({ expenseId: this.transaction().id }));
+  }
 }
