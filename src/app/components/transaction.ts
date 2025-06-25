@@ -3,6 +3,7 @@ import { Expense } from '../models/expense.model';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { DELETE_EXPENSE } from '../store/actions';
+import { EditFormService } from '../services/editForm.service';
 
 @Component({
   selector: 'Transaction',
@@ -70,11 +71,13 @@ import { DELETE_EXPENSE } from '../store/actions';
 })
 export class Transaction {
   private store = inject(Store);
+  editFormService: EditFormService = inject(EditFormService);
 
   transaction = input.required<Expense>();
 
   onHandleEdit(): void {
     console.log('handle edit');
+    this.editFormService.setExpense(this.transaction());
   }
 
   onHandleDelete(): void {

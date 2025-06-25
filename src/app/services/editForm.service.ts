@@ -13,6 +13,10 @@ export class EditFormService {
     console.log(this.isEditing());
   }
 
+  setIsEditing(value: boolean) {
+    this.isEditing.set(value);
+  }
+
   setExpense(value: Expense | null): void {
     this.expense.set(value);
   }

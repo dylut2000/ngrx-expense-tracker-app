@@ -1,8 +1,9 @@
 import { Component, inject, effect } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ExpenseCategory } from '../models/expense.model';
+import { Expense, ExpenseCategory } from '../models/expense.model';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import * as expenseActions from '../store/actions';
+import { EditFormService } from '../services/editForm.service';
 
 @Component({
   selector: 'FormSection',
@@ -55,7 +56,7 @@ import * as expenseActions from '../store/actions';
         </div>
       </div>
       <div class="text-right mt-4">
-        @if(false) {
+        @if(editFormService.isEditing()) {
         <button
           type="button"
           (click)="onReset()"
@@ -85,6 +86,7 @@ import * as expenseActions from '../store/actions';
 export class FormSection {
   private store = inject(Store);
   fb: FormBuilder = inject(FormBuilder);
+  editFormService: EditFormService = inject(EditFormService);
 
   expenseCategory: ExpenseCategory[] = ['Expense', 'Income'];
 
@@ -95,6 +97,20 @@ export class FormSection {
     category: [this.expenseCategory[0], Validators.required],
     date: [new Date().toISOString().split('T')[0], Validators.required],
   });
+
+  constructor() {
+    effect(() => {
+      if (this.editFormService.expense() !== null) {
+        const expense: Expense = this.editFormService.expense() as Expense;
+
+        this.form.setValue({
+          ...expense,
+        });
+
+        this.editFormService.setIsEditing(true);
+      }
+    });
+  }
 
   onSubmit(): void {
     if (this.form.invalid) return;
@@ -107,9 +123,15 @@ export class FormSection {
 
   onReset(): void {
     this.form.reset();
+    this.editFormService.setExpense(null);
+    this.editFormService.setIsEditing(false);
   }
 
   onEdit(): void {
-    console.log('edit');
+    this.store.dispatch(
+      expenseActions.UPDATE_EXPENSE({ expense: this.form.getRawValue() })
+    );
+
+    this.onReset();
   }
 }

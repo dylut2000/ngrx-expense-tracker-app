@@ -1,18 +1,18 @@
 {
   "expenses": [
     {
-      "id": "1",
+      "id": "af7c8cf1-4c74-41b8-a837-a7ead1da1e6b",
+      "description": "Groceries",
+      "amount": 500,
+      "category": "Expense",
+      "date": "2025-06-25"
+    },
+    {
+      "id": "f6a44669-8ef7-46df-9107-c551903cbe87",
       "description": "Salary",
       "amount": 2000,
       "category": "Income",
-      "date": "2025-06-21T00:00:00.000Z"
-    },
-    {
-      "id": "af7c8cf1-4c74-41b8-a837-a7ead1da1e6b",
-      "description": "Groceries",
-      "amount": 1000,
-      "category": "Expense",
-      "date": "2025-06-25"
+      "date": "2025-06-19"
     }
   ]
 }
