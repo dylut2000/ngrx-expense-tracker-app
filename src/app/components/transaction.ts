@@ -1,28 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { Expense } from '../models/expense.model';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'Transaction',
-  imports: [],
+  imports: [DatePipe, CurrencyPipe],
   template: `
+    @if (transaction()) {
     <div
       class="w-full h-16 bg-slate-50 relative flex items-center gap-1.5 md:gap-4 px-2"
     >
       <div
-        class="absolute top-0 left-0 text-[8px] bg-red-500/70 font-thin px-4 text-white"
+        class="absolute top-0 left-0 text-[8px] font-thin w-12 text-center text-white"
+        [class]="
+          transaction()?.category == 'Expense'
+            ? 'bg-red-500/70'
+            : 'bg-teal-500/70'
+        "
       >
-        expense
+        {{ transaction()?.category }}
       </div>
       <div class="absolute bottom-0 left-1 text-[8px] font-thin px-1">
-        22/07/2025
+        {{ transaction()?.date | date }}
       </div>
 
       <div class="flex-1 overflow-hidden">
         <p class="w-full truncate text-slate-500">
-          hello therejhgfgjkjhgfghjkljh
+          {{ transaction()?.description }}
         </p>
       </div>
-      <div class="font-bold text-lg text-slate-500">R300</div>
-      <div>
+      <div class="md:font-bold text-slate-500">
+        {{ transaction()?.amount | currency : 'R' }}
+      </div>
+      <div class="text-slate-700">
         <button class="p-2 shadow cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -53,6 +63,9 @@ import { Component } from '@angular/core';
         </button>
       </div>
     </div>
+    }
   `,
 })
-export class Transaction {}
+export class Transaction {
+  transaction = input<Expense>();
+}

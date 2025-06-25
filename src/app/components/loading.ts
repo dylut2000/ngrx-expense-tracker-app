@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'Loading',
@@ -17,4 +19,8 @@ import { Component } from '@angular/core';
     }
   `,
 })
-export class Loading {}
+export class Loading {
+  private store = inject(Store);
+
+  isLoading$!: Observable<boolean>;
+}

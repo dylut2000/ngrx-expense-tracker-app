@@ -1,18 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { ExpenseCategory } from '../models/expense.model';
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'FormSection',
-  imports: [],
+  imports: [ReactiveFormsModule],
   template: `
     <form
+      [formGroup]="form"
       class="w-full bg-slate-100 h-auto my-2 sticky top-0 z-20 flex flex-col p-2 md:p-4 shadow"
     >
       <h1 class="font-bold mb-2">Add new transaction</h1>
+      <input type="hidden" formControlName="id" />
 
       <div class="w-full flex flex-col md:grid md:grid-cols-2 gap-1">
         <div>
           <input
             type="text"
+            formControlName="description"
             class="w-full bg-white p-2 outline-none placeholder-slate-400"
             placeholder="Description"
           />
@@ -20,33 +26,85 @@ import { Component } from '@angular/core';
         <div>
           <input
             type="number"
+            formControlName="amount"
             class="w-full bg-white p-2 outline-none placeholder-slate-400"
+            min="0"
             placeholder="Amount"
           />
         </div>
         <div>
-          <input
+          <select
             type="text"
+            formControlName="category"
             class="w-full bg-white p-2 outline-none placeholder-slate-400"
             placeholder="Category"
-          />
+          >
+            @for (option of expenseCategory; track $index) {
+            <option [value]="option">{{ option }}</option>
+            }
+          </select>
         </div>
         <div>
           <input
             type="date"
+            formControlName="date"
             class="w-full bg-white p-2 outline-none placeholder-slate-400"
             placeholder="Date"
           />
         </div>
       </div>
       <div class="text-right mt-4">
+        @if(isEditing) {
         <button
+          type="button"
+          (click)="onReset()"
+          class="px-6 py-1 bg-slate-700 hover:opacity-90 text-slate-50 cursor-pointer mb-1"
+        >
+          CLEAR
+        </button>
+        <button
+          (click)="onEdit()"
+          class="px-6 py-1 bg-slate-900 hover:opacity-90 text-slate-50 cursor-pointer mb-1"
+        >
+          EDIT
+        </button>
+        }@else {
+        <button
+          (click)="onSubmit()"
           class="px-6 py-1 bg-slate-900 hover:opacity-90 text-slate-50 cursor-pointer mb-1"
         >
           ADD
         </button>
+
+        }
       </div>
     </form>
   `,
 })
-export class FormSection {}
+export class FormSection {
+  private store = inject(Store);
+  fb: FormBuilder = inject(FormBuilder);
+
+  isEditing: boolean = false;
+  expenseCategory: ExpenseCategory[] = ['Expense', 'Income'];
+
+  form = this.fb.nonNullable.group({
+    id: '',
+    description: ['', Validators.required],
+    amount: [0, [Validators.required, Validators.min(0)]],
+    category: ['Expense', Validators.required],
+    date: [new Date().toISOString().split('T')[0], Validators.required],
+  });
+
+  onSubmit(): void {
+    console.log(this.form.getRawValue());
+  }
+
+  onReset(): void {
+    this.form.reset();
+  }
+
+  onEdit(): void {
+    console.log('edit');
+  }
+}
