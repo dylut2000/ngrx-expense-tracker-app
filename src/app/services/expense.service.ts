@@ -35,8 +35,8 @@ export class ExpenseService {
 
   addExpense(expense: ExpenseData): Observable<Expense> {
     const newExpense: Expense = {
-      id: uuidv4(),
       ...expense,
+      id: uuidv4(),
     };
     return this.http
       .post<Expense>(this.expenseUrl, newExpense)

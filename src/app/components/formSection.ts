@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ExpenseCategory } from '../models/expense.model';
+import { ExpenseCategory, ExpenseData } from '../models/expense.model';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import * as expenseActions from '../store/actions';
 
 @Component({
   selector: 'FormSection',
@@ -92,12 +93,17 @@ export class FormSection {
     id: '',
     description: ['', Validators.required],
     amount: [0, [Validators.required, Validators.min(0)]],
-    category: ['Expense', Validators.required],
+    category: [this.expenseCategory[0], Validators.required],
     date: [new Date().toISOString().split('T')[0], Validators.required],
   });
 
   onSubmit(): void {
-    console.log(this.form.getRawValue());
+    if (this.form.invalid) return;
+
+    this.store.dispatch(
+      expenseActions.ADD_EXPENSE({ expensedata: this.form.getRawValue() })
+    );
+    this.onReset();
   }
 
   onReset(): void {
