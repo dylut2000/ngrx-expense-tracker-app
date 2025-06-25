@@ -28,10 +28,14 @@ json-server --watch db.json
 ng serve -o
 ```
 
+<hr/>
+
+- @angular/core 19.2
+- @ngrx/store 19.2
+- @tailwindcss/postcss 4.1.10
+
 <hr />
 
 ### [Hardy Lutula Dylut2000](https://github.com/dylut2000)
-
-
 
 ### [Check this NGRX video on YOUTUBE](https://www.youtube.com/watch?v=hoPZCrXkIM4&t=2409s)
