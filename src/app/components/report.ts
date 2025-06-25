@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'Report',
@@ -26,4 +27,9 @@ import { Component } from '@angular/core';
     </div>
   `,
 })
-export class Report {}
+export class Report {
+  
+  totalIncome$!: Observable<number>;
+  totalExpense$!: Observable<number>;
+  netBalance$!: Observable<number>;
+}

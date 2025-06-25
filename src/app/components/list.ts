@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Transaction } from './transaction';
+import { Observable } from 'rxjs';
+import { Expense } from '../models/expense.model';
 
 @Component({
   selector: 'List',
@@ -20,4 +22,7 @@ import { Transaction } from './transaction';
     </div>
   `,
 })
-export class List {}
+export class List {
+  
+  allExpenses$!: Observable<Expense[]>;
+}
